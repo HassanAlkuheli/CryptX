@@ -13,7 +13,8 @@ class SendTransactionUseCase(
 
     suspend fun execute(
         to: String,
-        amount: BigDecimal
+        amount: BigDecimal,
+        symbol: String
     ): Result<Transaction> {
 
         if (!networkRepository.isNetworkAvailable()) {
@@ -24,11 +25,14 @@ class SendTransactionUseCase(
             return Result.failure(Exception("Invalid address"))
         }
 
-        val balance = walletRepository.getBalance()
-        if (balance < amount) {
-            return Result.failure(Exception("Insufficient balance"))
+        val wallet = walletRepository.getWallet()
+        val balanceItem = wallet.balances.find { it.symbol == symbol }
+            ?: return Result.failure(Exception("Symbol $symbol not found"))
+
+        if (balanceItem.quantity < amount) {
+            return Result.failure(Exception("Insufficient balance for $symbol"))
         }
 
-        return walletRepository.sendTransaction(to, amount)
+        return walletRepository.sendTransaction(to, amount, symbol)
     }
 }

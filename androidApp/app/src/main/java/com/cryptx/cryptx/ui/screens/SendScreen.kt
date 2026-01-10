@@ -9,15 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.view.SendTransactionViewModel
 import com.cryptx.cryptx.ui.theme.*
-import com.cryptx.cryptx.repository.FakeNetworkRepository
-import com.cryptx.cryptx.repository.FakeWalletRepository
-import com.cryptx.cryptx.usecase.SendTransactionUseCase
-import com.cryptx.cryptx.usecase.ValidateAddressUseCase
+import java.math.BigDecimal
 
 @Composable
 fun SendScreen(viewModel: SendTransactionViewModel, onBackClick: () -> Unit) {
@@ -188,7 +184,7 @@ fun SendScreen(viewModel: SendTransactionViewModel, onBackClick: () -> Unit) {
         // Send Button
         Button(
             onClick = {
-                viewModel.send(toAddress, amount.toDoubleOrNull() ?: 0.0)
+                viewModel.send(toAddress, BigDecimal(amount.toDoubleOrNull() ?: 0.0))
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -216,24 +212,5 @@ fun SendScreen(viewModel: SendTransactionViewModel, onBackClick: () -> Unit) {
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SendScreenPreview() {
-    CryptoWalletTheme {
-        val sendViewModel = SendTransactionViewModel(
-            SendTransactionUseCase(
-                FakeWalletRepository(),
-                FakeNetworkRepository(),
-                ValidateAddressUseCase()
-            ),
-            ValidateAddressUseCase()
-        )
-        SendScreen(
-            viewModel = sendViewModel,
-            onBackClick = {}
-        )
     }
 }

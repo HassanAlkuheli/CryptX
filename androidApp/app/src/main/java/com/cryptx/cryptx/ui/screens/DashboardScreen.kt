@@ -12,13 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.view.WalletViewModel
 import com.cryptx.cryptx.ui.theme.*
-import com.cryptx.cryptx.repository.FakeWalletRepository
-import com.cryptx.cryptx.usecase.GetWalletUseCase
 
 data class Asset(
     val symbol: String,
@@ -142,7 +139,7 @@ fun DashboardScreen(viewModel: WalletViewModel, onProfileClick: () -> Unit) {
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),
-                    colors = OutlinedButtonDefaults.outlinedButtonColors(
+                    colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = OnBackground
                     ),
                     border = ButtonDefaults.outlinedButtonBorder,
@@ -227,17 +224,5 @@ fun DashboardScreen(viewModel: WalletViewModel, onProfileClick: () -> Unit) {
         item {
             Spacer(modifier = Modifier.height(24.dp))
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DashboardScreenPreview() {
-    CryptoWalletTheme {
-        val walletViewModel = WalletViewModel(GetWalletUseCase(FakeWalletRepository()))
-        DashboardScreen(
-            viewModel = walletViewModel,
-            onProfileClick = {}
-        )
     }
 }

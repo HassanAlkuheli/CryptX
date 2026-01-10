@@ -15,27 +15,27 @@ class SendTransactionViewModel(
     private val validateAddressUseCase: ValidateAddressUseCase
 ) {
 
-    private val _sendTransactionState = MutableStateFlow(SendTransactionState())
-    val sendTransactionState: StateFlow<SendTransactionState> = _sendTransactionState
+    private val _sendState = MutableStateFlow(SendTransactionState())
+    val sendState: StateFlow<SendTransactionState> = _sendState
 
     private val scope = CoroutineScope(Dispatchers.Default)
 
-    fun sendTransaction(to: String, amount: BigDecimal) {
+    fun send(to: String, amount: BigDecimal, symbol: String = "BTC") {
         // First, validate address
         if (!validateAddressUseCase.execute(to)) {
-            _sendTransactionState.value = SendTransactionState(error = "Invalid address")
+            _sendState.value = SendTransactionState(error = "Invalid address")
             return
         }
 
-        _sendTransactionState.value = SendTransactionState(isLoading = true, error = null)
+        _sendState.value = SendTransactionState(isLoading = true, error = null)
         scope.launch {
-            val result = sendTransactionUseCase.execute(to, amount)
+            val result = sendTransactionUseCase.execute(to, amount, symbol)
             result.fold(
                 onSuccess = { transaction ->
-                    _sendTransactionState.value = SendTransactionState(transaction = transaction, isLoading = false)
+                    _sendState.value = SendTransactionState(transaction = transaction, isLoading = false)
                 },
                 onFailure = { exception ->
-                    _sendTransactionState.value = SendTransactionState(isLoading = false, error = exception.message)
+                    _sendState.value = SendTransactionState(isLoading = false, error = exception.message)
                 }
             )
         }

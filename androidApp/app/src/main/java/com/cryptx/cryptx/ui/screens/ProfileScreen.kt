@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Copy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -92,12 +91,12 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                         },
                         modifier = Modifier.size(24.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.Copy,
-                            contentDescription = "Copy",
-                            tint = Primary,
-                            modifier = Modifier.size(18.dp)
-                        )
+                        // Icon(
+                        //     imageVector = Icons.ContentCopy,
+                        //     contentDescription = "Copy",
+                        //     tint = Primary,
+                        //     modifier = Modifier.size(18.dp)
+                        // )
                     }
                 }
             }
@@ -269,13 +268,5 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    CryptoWalletTheme {
-        ProfileScreen(onBackClick = {})
     }
 }

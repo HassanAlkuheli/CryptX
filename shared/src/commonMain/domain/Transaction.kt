@@ -7,6 +7,7 @@ data class Transaction(
     val from: String,
     val to: String,
     val amount: BigDecimal,
+    val symbol: String,
     val status: TransactionStatus
 )
 
