@@ -271,3 +271,11 @@ fun ProfileScreen(onBackClick: () -> Unit) {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun ProfileScreenPreview() {
+    CryptoWalletTheme {
+        ProfileScreen(onBackClick = {})
+    }
+}

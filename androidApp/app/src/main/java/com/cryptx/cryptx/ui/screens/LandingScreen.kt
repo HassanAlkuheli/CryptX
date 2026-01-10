@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.theme.Background
+import com.cryptx.cryptx.ui.theme.CryptoWalletTheme
 import com.cryptx.cryptx.ui.theme.Primary
 import com.cryptx.cryptx.ui.theme.OnBackground
 
@@ -72,5 +74,13 @@ fun LandingScreen(onGetStarted: () -> Unit) {
         }
 
         Spacer(modifier = Modifier.height(32.dp))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LandingScreenPreview() {
+    CryptoWalletTheme {
+        LandingScreen(onGetStarted = {})
     }
 }
