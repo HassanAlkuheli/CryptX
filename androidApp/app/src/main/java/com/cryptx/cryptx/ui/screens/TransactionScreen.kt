@@ -34,8 +34,11 @@ fun TransactionScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Top bar removed (was ScreenHeader)
-            Spacer(modifier = Modifier.height(8.dp))
+            // Header
+            ScreenHeader(
+                title = "Send Transaction",
+                onBackClick = onBackClick
+            )
 
             Column(
                 modifier = Modifier
