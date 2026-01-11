@@ -13,7 +13,6 @@ import com.cryptx.cryptx.ui.components.PrimaryButton
 import com.cryptx.cryptx.ui.components.ScreenHeader
 import com.cryptx.cryptx.ui.theme.*
 import com.cryptx.cryptx.view.SendTransactionViewModel
-import java.math.BigDecimal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -242,7 +241,7 @@ fun TransactionScreen(
                     onClick = {
                         viewModel.send(
                             toAddress,
-                            BigDecimal(amount.toDoubleOrNull() ?: 0.0),
+                            amount.toDoubleOrNull() ?: 0.0,
                             selectedCrypto
                         )
                     },

@@ -3,7 +3,6 @@ package com.cryptx.cryptx.repository
 import com.cryptx.cryptx.domain.Transaction
 import com.cryptx.cryptx.domain.Wallet
 import com.cryptx.cryptx.domain.PriceHistory
-import java.math.BigDecimal
 
 interface WalletRepository {
     suspend fun getAddress(): String
@@ -11,7 +10,7 @@ interface WalletRepository {
     suspend fun getPriceHistory(symbol: String): PriceHistory
     suspend fun sendTransaction(
         to: String,
-        amount: BigDecimal,
+        amount: Double,
         symbol: String
     ): Result<Transaction>
 }

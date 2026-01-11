@@ -1,33 +1,10 @@
 package com.cryptx.cryptx.domain
 
-import java.math.BigDecimal
-
-data class BalanceItem(
-    val symbol: String,
-    val name: String,
-    val quantity: BigDecimal,
-    val price: BigDecimal,
-    val totalValue: BigDecimal = quantity * price
-)
-
-data class PriceCandle(
-    val timestamp: Long,
-    val open: BigDecimal,
-    val high: BigDecimal,
-    val low: BigDecimal,
-    val close: BigDecimal,
-    val change: BigDecimal
-)
-
-data class PriceHistory(
-    val symbol: String,
-    val candles: List<PriceCandle>
-)
-
+/** Wallet aggregate with Double-based balances */
 data class Wallet(
     val address: String,
     val balances: List<BalanceItem>
 ) {
-    val totalBalance: BigDecimal
-        get() = balances.fold(BigDecimal.ZERO) { acc, item -> acc + item.totalValue }
+    val totalBalance: Double
+        get() = balances.fold(0.0) { acc, item -> acc + item.totalValue }
 }

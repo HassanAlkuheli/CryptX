@@ -1,12 +1,11 @@
 package com.cryptx.cryptx.domain
 
-import java.math.BigDecimal
-
+/** Transaction entity (amount is Double for platform neutrality) */
 data class Transaction(
     val id: String,
     val from: String,
     val to: String,
-    val amount: BigDecimal,
+    val amount: Double,
     val symbol: String,
     val status: TransactionStatus
 )

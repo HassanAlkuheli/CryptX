@@ -3,7 +3,6 @@ package com.cryptx.cryptx.usecase
 import com.cryptx.cryptx.domain.Transaction
 import com.cryptx.cryptx.repository.NetworkRepository
 import com.cryptx.cryptx.repository.WalletRepository
-import java.math.BigDecimal
 
 class SendTransactionUseCase(
     private val walletRepository: WalletRepository,
@@ -13,7 +12,7 @@ class SendTransactionUseCase(
 
     suspend fun execute(
         to: String,
-        amount: BigDecimal,
+        amount: Double,
         symbol: String
     ): Result<Transaction> {
 

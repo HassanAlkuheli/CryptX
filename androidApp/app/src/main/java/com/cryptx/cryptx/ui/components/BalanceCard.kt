@@ -13,13 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.theme.*
-import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
 fun BalanceCard(
-    balance: BigDecimal,
+    balance: Double,
     percentageChange: Double,
     modifier: Modifier = Modifier
 ) {
@@ -85,7 +84,7 @@ fun PercentageChip(
     }
 }
 
-private fun formatCurrency(amount: BigDecimal): String {
+private fun formatCurrency(amount: Double): String {
     val formatter = NumberFormat.getCurrencyInstance(Locale.US)
     return formatter.format(amount)
 }

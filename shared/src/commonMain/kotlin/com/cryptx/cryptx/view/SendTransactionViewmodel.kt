@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.math.BigDecimal
 
 class SendTransactionViewModel(
     private val sendTransactionUseCase: SendTransactionUseCase,
@@ -20,7 +19,7 @@ class SendTransactionViewModel(
 
     private val scope = CoroutineScope(Dispatchers.Default)
 
-    fun send(to: String, amount: BigDecimal, symbol: String = "BTC") {
+    fun send(to: String, amount: Double, symbol: String = "BTC") {
         // First, validate address
         if (!validateAddressUseCase.execute(to)) {
             _sendState.value = SendTransactionState(error = "Invalid address")

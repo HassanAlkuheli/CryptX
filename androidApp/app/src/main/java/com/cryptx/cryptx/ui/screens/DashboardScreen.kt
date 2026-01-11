@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.components.*
 import com.cryptx.cryptx.ui.theme.*
 import com.cryptx.cryptx.view.WalletViewModel
-import java.math.BigDecimal
 
 @Composable
 fun DashboardScreen(
@@ -50,7 +49,7 @@ fun DashboardScreen(
                 // Balance Card
                 item {
                     BalanceCard(
-                        balance = walletState.wallet?.totalBalance ?: BigDecimal("87430.12"),
+                        balance = walletState.wallet?.totalBalance ?: 87430.12,
                         percentageChange = 10.2,
                         modifier = Modifier.padding(horizontal = 20.dp)
                     )
@@ -108,10 +107,10 @@ fun DashboardScreen(
                         }
                     )
                 } ?: listOf(
-                    AssetItemData("ETH", "Ethereum", BigDecimal("50"), BigDecimal("503.12"), 8.2),
-                    AssetItemData("BTC", "Bitcoin", BigDecimal("2.05"), BigDecimal("26927"), -2.1),
-                    AssetItemData("LTC", "Litecoin", BigDecimal("2.05"), BigDecimal("6927"), 5.3),
-                    AssetItemData("XRP", "Ripple", BigDecimal("2.05"), BigDecimal("4637"), -1.5)
+                    AssetItemData("ETH", "Ethereum", 50.0, 503.12, 8.2),
+                    AssetItemData("BTC", "Bitcoin", 2.05, 26927.0, -2.1),
+                    AssetItemData("LTC", "Litecoin", 2.05, 6927.0, 5.3),
+                    AssetItemData("XRP", "Ripple", 2.05, 4637.0, -1.5)
                 )
 
                 items(assets) { asset ->
