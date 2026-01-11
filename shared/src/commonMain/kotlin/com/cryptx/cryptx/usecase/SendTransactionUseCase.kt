@@ -1,6 +1,7 @@
 package com.cryptx.cryptx.usecase
 
 import com.cryptx.cryptx.domain.Transaction
+import com.cryptx.cryptx.domain.TransactionStatus
 import com.cryptx.cryptx.repository.NetworkRepository
 import com.cryptx.cryptx.repository.WalletRepository
 
@@ -32,6 +33,7 @@ class SendTransactionUseCase(
             return Result.failure(Exception("Insufficient balance for $symbol"))
         }
 
+        // delegate to repository to create the transaction and manage status
         return walletRepository.sendTransaction(to, amount, symbol)
     }
 }

@@ -1,11 +1,11 @@
 package com.cryptx.cryptx.state
 
-import com.cryptx.cryptx.domain.Wallet
-import com.cryptx.cryptx.domain.Transaction
+import com.cryptx.cryptx.domain.Holding
 
+/** Simple state holder for wallet screen; no logic or computed properties */
 data class WalletState(
-    val wallet: Wallet? = null,
-    val transactions: List<Transaction> = emptyList(),
+    val address: String = "",
+    val holdings: List<Holding> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )

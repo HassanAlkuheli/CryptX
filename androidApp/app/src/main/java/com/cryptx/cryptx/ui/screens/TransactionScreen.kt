@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.components.PrimaryButton
 import com.cryptx.cryptx.ui.components.ScreenHeader
 import com.cryptx.cryptx.ui.theme.*
-import com.cryptx.cryptx.view.SendTransactionViewModel
+import com.cryptx.cryptx.viewmodel.SendTransactionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,7 +20,7 @@ fun TransactionScreen(
     viewModel: SendTransactionViewModel,
     onBackClick: () -> Unit
 ) {
-    val sendState by viewModel.sendState.collectAsState()
+    val sendState by viewModel.state.collectAsState()
     var toAddress by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
     var selectedCrypto by remember { mutableStateOf("BTC") }
@@ -179,21 +179,13 @@ fun TransactionScreen(
                             )
                         }
 
-                        if (sendState.isNetworkAvailable) {
-                            Text(
-                                text = "✓ Network OK",
-                                fontSize = 12.sp,
-                                color = Success,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        } else {
-                            Text(
-                                text = "✗ No Network",
-                                fontSize = 12.sp,
-                                color = Error,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
+                        // Network status is checked within use case; show general ready state
+                        Text(
+                            text = "Ready to Send",
+                            fontSize = 12.sp,
+                            color = Success,
+                            fontWeight = FontWeight.SemiBold
+                        )
                     }
                 }
 

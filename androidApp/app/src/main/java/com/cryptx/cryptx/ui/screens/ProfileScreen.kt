@@ -18,13 +18,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.components.ScreenHeader
 import com.cryptx.cryptx.ui.theme.*
+import com.cryptx.cryptx.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(onBackClick: () -> Unit) {
+fun ProfileScreen(
+    viewModel: ProfileViewModel,
+    onBackClick: () -> Unit
+) {
+    val profileState by viewModel.state.collectAsState()
     var isBiometricEnabled by remember { mutableStateOf(false) }
     var isDarkMode by remember { mutableStateOf(true) }
     var notificationsEnabled by remember { mutableStateOf(true) }
     val clipboardManager = LocalClipboardManager.current
+
+    // Display name from profile or fallback
+    val displayName = profileState.profile?.name ?: "User"
 
     Box(
         modifier = Modifier
@@ -46,6 +54,44 @@ fun ProfileScreen(onBackClick: () -> Unit) {
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 20.dp)
             ) {
+                // Profile Info Card
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Surface),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        // Profile placeholder
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(Primary, MaterialTheme.shapes.medium),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = displayName.take(1).uppercase(),
+                                color = OnPrimary,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = displayName,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = OnSurface
+                        )
+                    }
+                }
+
                 // Wallet Address Section
                 Card(
                     modifier = Modifier

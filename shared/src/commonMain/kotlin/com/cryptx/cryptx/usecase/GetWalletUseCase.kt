@@ -1,7 +1,7 @@
 package com.cryptx.cryptx.usecase
 
-import com.cryptx.cryptx.domain.Wallet
 import com.cryptx.cryptx.domain.PriceHistory
+import com.cryptx.cryptx.domain.Wallet
 import com.cryptx.cryptx.repository.WalletRepository
 
 class GetWalletUseCase(

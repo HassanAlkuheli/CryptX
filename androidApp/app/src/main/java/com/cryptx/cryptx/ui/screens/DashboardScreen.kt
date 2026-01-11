@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cryptx.cryptx.ui.components.*
 import com.cryptx.cryptx.ui.theme.*
-import com.cryptx.cryptx.view.WalletViewModel
+import com.cryptx.cryptx.viewmodel.WalletViewModel
 
 @Composable
 fun DashboardScreen(
@@ -21,7 +21,7 @@ fun DashboardScreen(
     onProfileClick: () -> Unit,
     onSendClick: () -> Unit
 ) {
-    val walletState by viewModel.walletState.collectAsState()
+    val walletState by viewModel.state.collectAsState()
 
     Box(
         modifier = Modifier
@@ -46,10 +46,13 @@ fun DashboardScreen(
                     )
                 }
 
+                // Calculate total balance from holdings
+                val totalBalance = walletState.holdings.sumOf { it.eqToUsdt }
+
                 // Balance Card
                 item {
                     BalanceCard(
-                        balance = walletState.wallet?.totalBalance ?: 87430.12,
+                        balance = if (totalBalance > 0) totalBalance else 87430.12,
                         percentageChange = 10.2,
                         modifier = Modifier.padding(horizontal = 20.dp)
                     )
@@ -91,27 +94,31 @@ fun DashboardScreen(
                     }
                 }
 
-                // Holdings List
-                val assets = walletState.wallet?.balances?.map { balance ->
-                    AssetItemData(
-                        symbol = balance.symbol,
-                        name = balance.name,
-                        quantity = balance.quantity,
-                        value = balance.totalValue,
-                        change = when (balance.symbol) {
-                            "ETH" -> 8.2
-                            "BTC" -> -2.1
-                            "LTC" -> 5.3
-                            "XRP" -> -1.5
-                            else -> 0.0
-                        }
+                // Holdings List from shared WalletState
+                val assets = if (walletState.holdings.isNotEmpty()) {
+                    walletState.holdings.map { holding ->
+                        AssetItemData(
+                            symbol = holding.symbol,
+                            name = holding.name,
+                            quantity = holding.amount,
+                            value = holding.eqToUsdt,
+                            change = when (holding.symbol) {
+                                "ETH" -> 8.2
+                                "BTC" -> -2.1
+                                "LTC" -> 5.3
+                                "XRP" -> -1.5
+                                else -> 0.0
+                            }
+                        )
+                    }
+                } else {
+                    listOf(
+                        AssetItemData("ETH", "Ethereum", 50.0, 503.12, 8.2),
+                        AssetItemData("BTC", "Bitcoin", 2.05, 26927.0, -2.1),
+                        AssetItemData("LTC", "Litecoin", 2.05, 6927.0, 5.3),
+                        AssetItemData("XRP", "Ripple", 2.05, 4637.0, -1.5)
                     )
-                } ?: listOf(
-                    AssetItemData("ETH", "Ethereum", 50.0, 503.12, 8.2),
-                    AssetItemData("BTC", "Bitcoin", 2.05, 26927.0, -2.1),
-                    AssetItemData("LTC", "Litecoin", 2.05, 6927.0, 5.3),
-                    AssetItemData("XRP", "Ripple", 2.05, 4637.0, -1.5)
-                )
+                }
 
                 items(assets) { asset ->
                     AssetItem(

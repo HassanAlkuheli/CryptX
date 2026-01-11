@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.cryptx.cryptx.viewmodel.WalletViewModelTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-01-11T23:43:21.704Z" hostname="DESKTOP-UC84C3H" time="0.005">
+  <properties/>
+  <testcase name="loadWallet_populatesState[jvm]" classname="com.cryptx.cryptx.viewmodel.WalletViewModelTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
