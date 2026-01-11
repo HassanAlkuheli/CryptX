@@ -1,9 +1,13 @@
 package com.cryptx.cryptx.repository
 
-/** Compatibility wrapper kept for callers: delegates to NetworkRepositoryImpl backed by FakeNetworkDataSource. */
-class FakeNetworkRepository : NetworkRepository {
-    private val impl: NetworkRepository = NetworkRepositoryImpl(FakeNetworkDataSource())
+import com.cryptx.cryptx.domain.Network
 
-    override suspend fun isNetworkAvailable(): Boolean = impl.isNetworkAvailable()
-    override suspend fun getCurrentNetwork(): com.cryptx.cryptx.domain.Network = impl.getCurrentNetwork()
+class FakeNetworkRepository : NetworkRepository {
+    override suspend fun isNetworkAvailable(): Boolean {
+        return NetworkDataSource.isNetworkAvailable()
+    }
+
+    override suspend fun getCurrentNetwork(): Network {
+        return NetworkDataSource.getCurrentNetwork()
+    }
 }
