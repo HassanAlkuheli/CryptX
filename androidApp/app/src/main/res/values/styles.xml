@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This app uses Jetpack Compose for UI, so we use a minimal Material3 base theme -->
+    <style name="AppTheme" parent="android:Theme.Material">
+        <!-- Compose handles theming, no need for legacy attributes -->
+    </style>
+</resources>
+

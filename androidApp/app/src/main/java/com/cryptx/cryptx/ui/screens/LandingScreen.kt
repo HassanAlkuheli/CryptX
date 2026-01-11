@@ -24,10 +24,10 @@ fun LandingScreen(onGetStarted: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            Spacer(modifier = Modifier.height(80.dp))
 
             // Logo
             Text(
@@ -77,6 +77,7 @@ fun LandingScreen(onGetStarted: () -> Unit) {
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
+            Spacer(modifier = Modifier.height(48.dp))
         }
     }
 }

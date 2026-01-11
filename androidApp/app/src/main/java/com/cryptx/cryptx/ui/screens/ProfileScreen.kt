@@ -34,11 +34,8 @@ fun ProfileScreen(onBackClick: () -> Unit) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // Header
-            ScreenHeader(
-                title = "Profile",
-                onBackClick = onBackClick
-            )
+            // Top bar removed (was ScreenHeader)
+            Spacer(modifier = Modifier.height(8.dp))
 
             Column(
                 modifier = Modifier

@@ -39,12 +39,9 @@ fun DashboardScreen(
                     .fillMaxWidth(),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                // Header
+                // Top bar removed (was DashboardHeader)
                 item {
-                    DashboardHeader(
-                        userName = "Alex",
-                        onSettingsClick = onProfileClick
-                    )
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
 
                 // Balance Card
