@@ -1,6 +1,8 @@
 package com.cryptx.cryptx.repository
 
-/** Simple network repository interface used by use-cases. */
+import com.cryptx.cryptx.domain.Network
+
 interface NetworkRepository {
-    fun isNetworkAvailable(): Boolean
+    suspend fun isNetworkAvailable(): Boolean
+    suspend fun getCurrentNetwork(): Network
 }

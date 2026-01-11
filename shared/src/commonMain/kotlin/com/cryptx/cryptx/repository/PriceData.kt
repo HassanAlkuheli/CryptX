@@ -21,7 +21,8 @@ internal object PriceData {
 
         val candles = mutableListOf<PriceCandle>()
         var currentPrice = basePrice
-        val now = System.currentTimeMillis()
+        // Use a stable base timestamp so this stays in commonMain (avoid platform System APIs)
+        val now = 1_700_000_000_000L
 
         for (i in 0..29) {
             val change = kotlin.random.Random.nextDouble(-100.0, 100.0)
