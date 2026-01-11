@@ -1,9 +1,12 @@
 package com.cryptx.cryptx.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,260 +16,290 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cryptx.cryptx.ui.components.ScreenHeader
 import com.cryptx.cryptx.ui.theme.*
 
 @Composable
 fun ProfileScreen(onBackClick: () -> Unit) {
     var isBiometricEnabled by remember { mutableStateOf(false) }
     var isDarkMode by remember { mutableStateOf(true) }
+    var notificationsEnabled by remember { mutableStateOf(true) }
     val clipboardManager = LocalClipboardManager.current
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Background)
-            .padding(16.dp)
     ) {
-        // Header
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 24.dp),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    tint = OnBackground
-                )
-            }
+            // Header
+            ScreenHeader(
+                title = "Profile",
+                onBackClick = onBackClick
+            )
 
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 20.dp)
+            ) {
+                // Wallet Address Section
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Surface),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Wallet Address",
+                            fontSize = 12.sp,
+                            color = TextSecondary,
+                            fontWeight = FontWeight.Medium
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "1A2B3C4D5E6F7G8H9I0J",
+                                fontSize = 14.sp,
+                                color = OnSurface,
+                                fontWeight = FontWeight.SemiBold
+                            )
+
+                            TextButton(
+                                onClick = {
+                                    clipboardManager.setText(
+                                        AnnotatedString("1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P")
+                                    )
+                                }
+                            ) {
+                                Text(
+                                    text = "Copy",
+                                    color = Primary,
+                                    fontSize = 12.sp
+                                )
+                            }
+                        }
+                    }
+                }
+
+                // Security Section
+                SectionTitle(text = "Security")
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Surface),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Column {
+                        // Biometric
+                        SettingsToggleItem(
+                            title = "Biometric Authentication",
+                            subtitle = "Face ID / Fingerprint",
+                            isChecked = isBiometricEnabled,
+                            onCheckedChange = { isBiometricEnabled = it }
+                        )
+
+                        Divider(
+                            color = OnSurface.copy(alpha = 0.1f),
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+
+                        // Dark Mode
+                        SettingsToggleItem(
+                            title = "Dark Mode",
+                            subtitle = "Theme preference",
+                            isChecked = isDarkMode,
+                            onCheckedChange = { isDarkMode = it }
+                        )
+                    }
+                }
+
+                // Notifications Section
+                SectionTitle(text = "Notifications")
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Surface),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    SettingsToggleItem(
+                        title = "Push Notifications",
+                        subtitle = "Transaction alerts",
+                        isChecked = notificationsEnabled,
+                        onCheckedChange = { notificationsEnabled = it }
+                    )
+                }
+
+                // General Section
+                SectionTitle(text = "General")
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Surface),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Column {
+                        SettingsNavigationItem(
+                            title = "Transaction History",
+                            onClick = { /* TODO */ }
+                        )
+
+                        Divider(
+                            color = OnSurface.copy(alpha = 0.1f),
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+
+                        SettingsNavigationItem(
+                            title = "Currency Preferences",
+                            onClick = { /* TODO */ }
+                        )
+
+                        Divider(
+                            color = OnSurface.copy(alpha = 0.1f),
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+
+                        SettingsNavigationItem(
+                            title = "Help & Support",
+                            onClick = { /* TODO */ }
+                        )
+
+                        Divider(
+                            color = OnSurface.copy(alpha = 0.1f),
+                            thickness = 1.dp,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+
+                        SettingsNavigationItem(
+                            title = "About",
+                            onClick = { /* TODO */ }
+                        )
+                    }
+                }
+
+                // Sign Out
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp)
+                        .clickable { /* TODO */ },
+                    colors = CardDefaults.cardColors(containerColor = Error.copy(alpha = 0.1f)),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Text(
+                        text = "Sign Out",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Error,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+        color = OnBackground,
+        modifier = Modifier.padding(bottom = 12.dp)
+    )
+}
+
+@Composable
+private fun SettingsToggleItem(
+    title: String,
+    subtitle: String,
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "Profile Settings",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = OnBackground,
-                modifier = Modifier.weight(1f)
+                text = title,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = OnSurface
+            )
+            Text(
+                text = subtitle,
+                fontSize = 12.sp,
+                color = TextSecondary
             )
         }
 
-        // Wallet Address Section
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp),
-            colors = CardDefaults.cardColors(containerColor = Surface),
-            shape = MaterialTheme.shapes.large
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text(
-                    text = "Wallet Address",
-                    fontSize = 12.sp,
-                    color = OnSurface.copy(alpha = 0.7f),
-                    fontWeight = FontWeight.Medium
-                )
+        Switch(
+            checked = isChecked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = OnPrimary,
+                checkedTrackColor = Primary,
+                uncheckedThumbColor = OnSurface.copy(alpha = 0.3f),
+                uncheckedTrackColor = Surface
+            )
+        )
+    }
+}
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "1A2B3C4D5E6F7G8H9I0J",
-                        fontSize = 14.sp,
-                        color = OnSurface,
-                        fontWeight = FontWeight.SemiBold
-                    )
-
-                    IconButton(
-                        onClick = {
-                            clipboardManager.setText(
-                                AnnotatedString("1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P")
-                            )
-                        },
-                        modifier = Modifier.size(24.dp)
-                    ) {
-                        // Icon(
-                        //     imageVector = Icons.ContentCopy,
-                        //     contentDescription = "Copy",
-                        //     tint = Primary,
-                        //     modifier = Modifier.size(18.dp)
-                        // )
-                    }
-                }
-            }
-        }
-
-        // Security Section
+@Composable
+private fun SettingsNavigationItem(
+    title: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
-            text = "Security",
+            text = title,
             fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = OnBackground,
-            modifier = Modifier.padding(bottom = 12.dp)
+            fontWeight = FontWeight.SemiBold,
+            color = OnSurface
         )
 
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp),
-            colors = CardDefaults.cardColors(containerColor = Surface),
-            shape = MaterialTheme.shapes.large
-        ) {
-            Column {
-                // Biometric
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "Biometric Authentication",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = OnSurface
-                        )
-
-                        Text(
-                            text = "Face ID / Fingerprint",
-                            fontSize = 12.sp,
-                            color = OnSurface.copy(alpha = 0.6f)
-                        )
-                    }
-
-                    Switch(
-                        checked = isBiometricEnabled,
-                        onCheckedChange = { isBiometricEnabled = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Primary,
-                            uncheckedThumbColor = OnSurface.copy(alpha = 0.3f)
-                        )
-                    )
-                }
-
-                Divider(
-                    color = OnSurface.copy(alpha = 0.1f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-
-                // Theme Mode
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = "Dark Mode",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = OnSurface
-                        )
-
-                        Text(
-                            text = "Theme preference",
-                            fontSize = 12.sp,
-                            color = OnSurface.copy(alpha = 0.6f)
-                        )
-                    }
-
-                    Switch(
-                        checked = isDarkMode,
-                        onCheckedChange = { isDarkMode = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Primary,
-                            uncheckedThumbColor = OnSurface.copy(alpha = 0.3f)
-                        )
-                    )
-                }
-            }
-        }
-
-        // General Section
-        Text(
-            text = "General",
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = OnBackground,
-            modifier = Modifier.padding(bottom = 12.dp)
+        Icon(
+            imageVector = Icons.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = TextSecondary
         )
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp),
-            colors = CardDefaults.cardColors(containerColor = Surface),
-            shape = MaterialTheme.shapes.large
-        ) {
-            Column {
-                TextButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = OnSurface)
-                ) {
-                    Text(
-                        text = "App Version: 1.0.0",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                Divider(
-                    color = OnSurface.copy(alpha = 0.1f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-
-                TextButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = androidx.compose.ui.graphics.Color.Red)
-                ) {
-                    Text(
-                        text = "Reset Wallet",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                Divider(
-                    color = OnSurface.copy(alpha = 0.1f),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-
-                TextButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = androidx.compose.ui.graphics.Color.Red)
-                ) {
-                    Text(
-                        text = "Logout",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
     }
 }

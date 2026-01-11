@@ -1,11 +1,15 @@
 package com.cryptx.cryptx.ui.theme
 
+import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
-private val LightColors = lightColorScheme(
+private val DarkColors = darkColorScheme(
     primary = Primary,
     secondary = Secondary,
     background = Background,
@@ -13,29 +17,26 @@ private val LightColors = lightColorScheme(
     error = Error,
     onPrimary = OnPrimary,
     onBackground = OnBackground,
-    onSurface = OnSurface
-)
-
-private val DarkColors = darkColorScheme(
-    primary = PrimaryVariant,
-    secondary = Secondary,
-    background = Background,
-    surface = Surface,
-    error = Error,
-    onPrimary = OnPrimary,
-    onBackground = OnBackground,
-    onSurface = OnSurface
+    onSurface = OnSurface,
+    surfaceVariant = SurfaceVariant
 )
 
 @Composable
 fun CryptoWalletTheme(
-    darkTheme: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) DarkColors else LightColors
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = Background.toArgb()
+            window.navigationBarColor = Background.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
+        }
+    }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = DarkColors,
         typography = AppTypography,
         shapes = AppShapes,
         content = content
