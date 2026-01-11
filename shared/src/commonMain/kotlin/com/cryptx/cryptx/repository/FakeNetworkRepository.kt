@@ -1,13 +1,10 @@
 package com.cryptx.cryptx.repository
 
-import com.cryptx.cryptx.domain.Network
+import com.cryptx.cryptx.domain.NetworkConfig
 
+/** Mock network repo that always reports network available and returns a test config. */
 class FakeNetworkRepository : NetworkRepository {
-    override suspend fun isNetworkAvailable(): Boolean {
-        return NetworkDataSource.isNetworkAvailable()
-    }
+    override fun isNetworkAvailable(): Boolean = true
 
-    override suspend fun getCurrentNetwork(): Network {
-        return NetworkDataSource.getCurrentNetwork()
-    }
+    fun getNetworkConfig(): NetworkConfig = NetworkConfig(name = "TESTNET", rpcUrl = "https://example.testnet")
 }
