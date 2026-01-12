@@ -35,19 +35,19 @@ fun DashboardHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Avatar placeholder
+            // Avatar placeholder with gradient accent
             Box(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(CircleShape)
-                    .background(Surface),
+                    .background(SurfaceCard),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = userName.firstOrNull()?.uppercase() ?: "A",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = OnSurface
+                    color = OnBackground
                 )
             }
             
@@ -66,7 +66,7 @@ fun DashboardHeader(
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .background(Surface)
+                .background(SurfaceCard)
         ) {
             Icon(
                 imageVector = Icons.Filled.Settings,

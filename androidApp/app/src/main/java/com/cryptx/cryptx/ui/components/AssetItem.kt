@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -42,7 +41,7 @@ fun AssetItem(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Surface),
+        colors = CardDefaults.cardColors(containerColor = SurfaceCard),
         shape = MaterialTheme.shapes.medium
     ) {
         Box(
@@ -51,48 +50,55 @@ fun AssetItem(
                 .height(72.dp)
         ) {
             // Chart positioned absolutely in the center-right area
-            MiniChart(
-                isPositive = asset.change >= 0,
-                seed = asset.symbol.hashCode(),
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(40.dp)
-                    .align(Alignment.CenterEnd)
-                    .offset(x = (-80).dp) // Offset from the right edge
+// Chart moved inside the row between the asset info and the price, with a safe zone
+Row(
+    modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.weight(1f)
+    ) {
+        // Crypto Icon placeholder
+        CryptoIcon(symbol = asset.symbol)
+
+        Column {
+            Text(
+                text = asset.name,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = OnSurface
             )
+            Text(
+                text = asset.symbol,
+                fontSize = 12.sp,
+                color = TextSecondary
+            )
+        }
+    }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.weight(1f)
+                // Chart placed centrally between info and price
+                Box(
+                    modifier = Modifier
+                        .width(100.dp)
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    // Crypto Icon placeholder
-                    CryptoIcon(symbol = asset.symbol)
-
-                    Column {
-                        Text(
-                            text = asset.name,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = OnSurface
-                        )
-                        Text(
-                            text = asset.symbol,
-                            fontSize = 12.sp,
-                            color = TextSecondary
-                        )
-                    }
+                    MiniChart(
+                        isPositive = asset.change >= 0,
+                        seed = asset.symbol.hashCode(),
+                        modifier = Modifier
+                            .width(80.dp)
+                            .height(40.dp)
+                    )
                 }
 
-                // Spacer for chart area
-                Spacer(modifier = Modifier.width(100.dp))
+                // Safe zone between chart and price
+                Spacer(modifier = Modifier.width(12.dp))
 
                 Column(
                     horizontalAlignment = Alignment.End

@@ -3,7 +3,9 @@ package com.cryptx.cryptx.state
 /** Screens represented in the bottom navigation */
 enum class NavScreen {
     HOME,
+    CHARTS,
     TRANSACTION,
+    SETTINGS,
     PROFILE
 }
 
