@@ -30,6 +30,10 @@ import com.cryptx.cryptx.viewmodel.WalletViewModel
 import com.cryptx.cryptx.viewmodel.ProfileViewModel
 import com.cryptx.cryptx.viewmodel.HoldingViewModel
 import com.cryptx.cryptx.viewmodel.SendTransactionViewModel
+import com.cryptx.cryptx.viewmodel.NavBarViewModel
+import com.cryptx.cryptx.state.NavBarState
+import com.cryptx.cryptx.state.NavScreen
+import androidx.compose.runtime.collectAsState
 
 enum class Screen {
     LANDING, DASHBOARD, TRANSACTION, PROFILE
@@ -58,6 +62,8 @@ class MainActivity : ComponentActivity() {
         val profileViewModel = ProfileViewModel(getProfileUseCase)
         val holdingViewModel = HoldingViewModel(getHoldingUseCase)
         val sendViewModel = SendTransactionViewModel(sendTransactionUseCase, validateAddressUseCase)
+        // Nav bar ViewModel (shared)
+        val navViewModel = NavBarViewModel()
 
         setContent {
             CryptoWalletTheme {
@@ -65,7 +71,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation(walletViewModel, profileViewModel, sendViewModel)
+                    AppNavigation(walletViewModel, profileViewModel, sendViewModel, navViewModel)
                 }
             }
         }
@@ -80,10 +86,14 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation(
     walletViewModel: WalletViewModel,
     profileViewModel: ProfileViewModel,
-    sendViewModel: SendTransactionViewModel
+    sendViewModel: SendTransactionViewModel,
+    navViewModel: NavBarViewModel
 ) {
     val currentScreen = remember { mutableStateOf(Screen.LANDING) }
     val showBottomNav = currentScreen.value != Screen.LANDING
+
+    // Observe nav selection from shared ViewModel
+    val navState = navViewModel.state.collectAsState(initial = NavBarState())
 
     Box(
         modifier = Modifier
@@ -100,29 +110,44 @@ fun AppNavigation(
                 when (currentScreen.value) {
                     Screen.LANDING -> {
                         LandingScreen(
-                            onGetStarted = { currentScreen.value = Screen.DASHBOARD }
+                            onGetStarted = {
+                                currentScreen.value = Screen.DASHBOARD
+                                navViewModel.select(NavScreen.HOME)
+                            }
                         )
                     }
 
                     Screen.DASHBOARD -> {
                         DashboardScreen(
                             viewModel = walletViewModel,
-                            onProfileClick = { currentScreen.value = Screen.PROFILE },
-                            onSendClick = { currentScreen.value = Screen.TRANSACTION }
+                            onProfileClick = {
+                                currentScreen.value = Screen.PROFILE
+                                navViewModel.select(NavScreen.PROFILE)
+                            },
+                            onSendClick = {
+                                currentScreen.value = Screen.TRANSACTION
+                                navViewModel.select(NavScreen.TRANSACTION)
+                            }
                         )
                     }
 
                     Screen.TRANSACTION -> {
                         TransactionScreen(
                             viewModel = sendViewModel,
-                            onBackClick = { currentScreen.value = Screen.DASHBOARD }
+                            onBackClick = {
+                                currentScreen.value = Screen.DASHBOARD
+                                navViewModel.select(NavScreen.HOME)
+                            }
                         )
                     }
 
                     Screen.PROFILE -> {
                         ProfileScreen(
                             viewModel = profileViewModel,
-                            onBackClick = { currentScreen.value = Screen.DASHBOARD }
+                            onBackClick = {
+                                currentScreen.value = Screen.DASHBOARD
+                                navViewModel.select(NavScreen.HOME)
+                            }
                         )
                     }
                 }
@@ -131,17 +156,25 @@ fun AppNavigation(
             // Bottom Navigation Bar (hidden on landing)
             if (showBottomNav) {
                 BottomNavBar(
-                    selectedItem = when (currentScreen.value) {
-                        Screen.DASHBOARD -> NavItem.HOME
-                        Screen.TRANSACTION -> NavItem.TRANSACTION
-                        Screen.PROFILE -> NavItem.PROFILE
-                        else -> NavItem.HOME
+                    selectedItem = when (navState.value.selected) {
+                        NavScreen.HOME -> NavItem.HOME
+                        NavScreen.TRANSACTION -> NavItem.TRANSACTION
+                        NavScreen.PROFILE -> NavItem.PROFILE
                     },
                     onItemSelected = { navItem ->
-                        currentScreen.value = when (navItem) {
-                            NavItem.HOME -> Screen.DASHBOARD
-                            NavItem.TRANSACTION -> Screen.TRANSACTION
-                            NavItem.PROFILE -> Screen.PROFILE
+                        when (navItem) {
+                            NavItem.HOME -> {
+                                currentScreen.value = Screen.DASHBOARD
+                                navViewModel.select(NavScreen.HOME)
+                            }
+                            NavItem.TRANSACTION -> {
+                                currentScreen.value = Screen.TRANSACTION
+                                navViewModel.select(NavScreen.TRANSACTION)
+                            }
+                            NavItem.PROFILE -> {
+                                currentScreen.value = Screen.PROFILE
+                                navViewModel.select(NavScreen.PROFILE)
+                            }
                         }
                     }
                 )

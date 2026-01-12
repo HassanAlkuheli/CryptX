@@ -1,4 +1,4 @@
-#Mon Jan 12 02:44:09 GMT+03:00 2026
+#Mon Jan 12 04:49:08 GMT+03:00 2026
 base.0=F\:\\LearningJourney\\LearningKotlin\\LearningKMP\\crypto_wallet\\androidApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=F\:\\LearningJourney\\LearningKotlin\\LearningKMP\\crypto_wallet\\androidApp\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.2=F\:\\LearningJourney\\LearningKotlin\\LearningKMP\\crypto_wallet\\androidApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
