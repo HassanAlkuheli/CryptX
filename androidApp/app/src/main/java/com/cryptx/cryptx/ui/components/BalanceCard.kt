@@ -1,7 +1,12 @@
 package com.cryptx.cryptx.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +25,8 @@ import java.util.Locale
 fun BalanceCard(
     balance: Double,
     percentageChange: Double,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTransactionClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = modifier
@@ -30,12 +36,37 @@ fun BalanceCard(
             .padding(24.dp)
     ) {
         Column {
-            Text(
-                text = "Current Balance",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color.Black.copy(alpha = 0.6f)
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                Text(
+                    text = "Current Balance",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black.copy(alpha = 0.6f)
+                )
+
+                // Transaction button
+                if (onTransactionClick != null) {
+                    Box(
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(CircleShape)
+                            .background(Color.Black.copy(alpha = 0.15f))
+                            .clickable { onTransactionClick() },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Send,
+                            contentDescription = "Send Transaction",
+                            tint = Color.Black.copy(alpha = 0.8f),
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

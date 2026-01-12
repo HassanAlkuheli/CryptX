@@ -1,5 +1,7 @@
 R_DEF: Internal format may change without notice
 local
 drawable ic_launcher
+drawable landingpage_image
+drawable linegoesrandomdirection
 string app_name
 style AppTheme

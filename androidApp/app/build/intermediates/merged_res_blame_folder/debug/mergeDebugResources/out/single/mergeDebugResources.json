@@ -1,6 +1,14 @@
 [
     {
+        "merged": "com.cryptx.cryptx.app-debug-41:/drawable_linegoesrandomdirection.png.flat",
+        "source": "com.cryptx.cryptx.app-main-43:/drawable/linegoesrandomdirection.png"
+    },
+    {
         "merged": "com.cryptx.cryptx.app-debug-41:/drawable_ic_launcher.xml.flat",
         "source": "com.cryptx.cryptx.app-main-43:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "com.cryptx.cryptx.app-debug-41:/drawable_landingpage_image.png.flat",
+        "source": "com.cryptx.cryptx.app-main-43:/drawable/landingpage_image.png"
     }
 ]

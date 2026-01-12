@@ -3,10 +3,10 @@ package com.cryptx.cryptx.ui.theme
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-// Primary Colors - Purple/Blue gradient style from design
-val Primary = Color(0xFF6C5CE7)        // Purple primary
-val PrimaryVariant = Color(0xFF5B4CD2) // Darker purple
-val PrimaryLight = Color(0xFF8B7CF6)   // Lighter purple
+// Primary Colors - Zinc/Slate style
+val Primary = Color(0xFF71717A)        // Zinc-500
+val PrimaryVariant = Color(0xFF52525B) // Zinc-600 darker
+val PrimaryLight = Color(0xFFA1A1AA)   // Zinc-400 lighter
 
 // Secondary (accent / highlights)
 val Secondary = Color(0xFFFFD93D)      // Gold/Yellow accent

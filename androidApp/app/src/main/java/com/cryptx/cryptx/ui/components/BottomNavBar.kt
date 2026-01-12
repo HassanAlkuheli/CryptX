@@ -16,7 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cryptx.cryptx.ui.theme.*
 
@@ -38,14 +40,14 @@ fun BottomNavBar(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Home
+        // Home / Wallet
         NavBarItem(
             icon = if (selectedItem == NavItem.HOME) Icons.Filled.Home else Icons.Outlined.Home,
             isSelected = selectedItem == NavItem.HOME,
             onClick = { onItemSelected(NavItem.HOME) }
         )
 
-        // Transaction (center - special styling)
+        // Transaction (center - always has circle, highlighted when selected)
         TransactionNavItem(
             isSelected = selectedItem == NavItem.TRANSACTION,
             onClick = { onItemSelected(NavItem.TRANSACTION) }
@@ -90,6 +92,7 @@ private fun TransactionNavItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    // Always show circle, change color based on selection
     Box(
         modifier = Modifier
             .size(56.dp)
@@ -102,12 +105,18 @@ private fun TransactionNavItem(
             ),
         contentAlignment = Alignment.Center
     ) {
-        // Two overlapping circles icon for transaction
-        Icon(
-            imageVector = Icons.Filled.Home, // Placeholder - we'll use a custom transaction icon
-            contentDescription = "Transaction",
-            tint = OnBackground,
-            modifier = Modifier.size(24.dp)
-        )
+        // Swap/Exchange icon using two arrows
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Up arrow
+            Icon(
+                imageVector = Icons.Filled.Home, // Will be replaced with swap arrows below
+                contentDescription = "Transaction",
+                tint = if (isSelected) OnBackground else NavItemUnselected,
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 }

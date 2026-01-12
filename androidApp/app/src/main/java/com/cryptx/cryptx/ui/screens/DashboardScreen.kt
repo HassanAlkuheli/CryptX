@@ -4,6 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,6 +25,9 @@ fun DashboardScreen(
     onSendClick: () -> Unit
 ) {
     val walletState by viewModel.state.collectAsState()
+    
+    // Sort state: true = highest first, false = lowest first
+    var sortHighestFirst by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier
@@ -49,25 +55,22 @@ fun DashboardScreen(
                 // Calculate total balance from holdings
                 val totalBalance = walletState.holdings.sumOf { it.eqToUsdt }
 
-                // Balance Card
+                // Balance Card with transaction button
                 item {
                     BalanceCard(
                         balance = if (totalBalance > 0) totalBalance else 87430.12,
                         percentageChange = 10.2,
+                        onTransactionClick = onSendClick,
                         modifier = Modifier.padding(horizontal = 20.dp)
                     )
                 }
 
-                // Action Buttons
+                // Spacing after balance card
                 item {
-                    ActionButtonRow(
-                        onDepositClick = { /* TODO */ },
-                        onWithdrawClick = onSendClick,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)
-                    )
+                    Spacer(modifier = Modifier.height(24.dp))
                 }
 
-                // Holdings Header
+                // Holdings Header with Sort Button
                 item {
                     Row(
                         modifier = Modifier
@@ -84,9 +87,22 @@ fun DashboardScreen(
                             color = OnBackground
                         )
 
-                        TextButton(onClick = { }) {
+                        // Sort toggle button
+                        TextButton(
+                            onClick = { sortHighestFirst = !sortHighestFirst }
+                        ) {
+                            Icon(
+                                imageVector = if (sortHighestFirst) 
+                                    Icons.Filled.KeyboardArrowDown 
+                                else 
+                                    Icons.Filled.KeyboardArrowUp,
+                                contentDescription = if (sortHighestFirst) "Highest first" else "Lowest first",
+                                tint = Primary,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "See All",
+                                text = if (sortHighestFirst) "Highest" else "Lowest",
                                 color = Primary,
                                 fontSize = 12.sp
                             )
@@ -119,8 +135,15 @@ fun DashboardScreen(
                         AssetItemData("XRP", "Ripple", 2.05, 4637.0, -1.5)
                     )
                 }
+                
+                // Sort assets based on current sort state
+                val sortedAssets = if (sortHighestFirst) {
+                    assets.sortedByDescending { it.value }
+                } else {
+                    assets.sortedBy { it.value }
+                }
 
-                items(assets) { asset ->
+                items(sortedAssets) { asset ->
                     AssetItem(
                         asset = asset,
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp)
