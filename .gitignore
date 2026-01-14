@@ -1,0 +1,53 @@
+# Gradle
+.gradle/
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Android
+*.apk
+*.aar
+*.dex
+*.class
+bin/
+gen/
+
+# iOS
+*.dSYM/
+*.ipa
+*.xcuserdatad
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Kotlin
+.kotlin/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Node.js (if any)
+node_modules/
+npm-debug.log*
+
+# VS Code
+.vscode/
+
+# Local properties
+local.properties
