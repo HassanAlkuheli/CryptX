@@ -138,8 +138,18 @@ Hybrid combines elements of MVVM and MVI. For instance, use MVVM for simple, dat
 
 Example: In a wallet app, use MVVM for the balance display screen (simple state management) and MVI for transaction processing (handling multiple intents like send, receive, confirm).
 
-```
-shared/
+## UI Layer
+
+The UI layer is platform-specific and focuses on user interface elements, including screen components, themes, main activities/fragments, and resources (e.g., res for Android, Assets for iOS). It interacts with the shared logic layer to display data and handle user interactions.
+
+### Split between Logic and UI Layers
+
+- **Logic Layer (Shared)**: Contains business logic, data access, state management, use cases, and view models. Written in Kotlin and shared across Android and iOS platforms.
+- **UI Layer (Platform-specific)**: Contains views, components, themes, and platform-specific code. Written in Kotlin/Java for Android and Swift for iOS, allowing for native UI optimizations.
+
+This separation ensures that core logic is reusable while UIs are tailored to each platform's design guidelines and performance needs.
+
+## Folder Structure
   src/
     commonMain/
       kotlin/
