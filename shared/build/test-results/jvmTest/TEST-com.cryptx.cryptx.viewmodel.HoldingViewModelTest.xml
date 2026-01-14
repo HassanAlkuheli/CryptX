@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.cryptx.cryptx.viewmodel.HoldingViewModelTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-01-12T01:48:53.587Z" hostname="DESKTOP-UC84C3H" time="0.296">
-  <properties/>
-  <testcase name="loadHolding_existingSymbol_setsHolding[jvm]" classname="com.cryptx.cryptx.viewmodel.HoldingViewModelTest" time="0.292"/>
-  <testcase name="loadHolding_missingSymbol_setsNull[jvm]" classname="com.cryptx.cryptx.viewmodel.HoldingViewModelTest" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
