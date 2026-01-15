@@ -1,3 +1,6 @@
+![WhatsApp Image 2026-01-15 at 12 35 54 AM (1)](https://github.com/user-attachments/assets/9627fa04-06fb-4692-9729-254dcee3945e)
+![WhatsApp Image 2026-01-15 at 12 35 54 AM](https://github.com/user-attachments/assets/6d9c7a0a-5e55-4ad4-9b71-d6e784c8f128)
+
 # CryptX - Crypto Wallet App
 
 A Kotlin Multiplatform (KMP) project for a crypto wallet application supporting Android and iOS.
